@@ -11,9 +11,12 @@ function Home() {
   const [department, setDepartment] = useState("");
   const [course, setCourse] = useState("");
 
-  const universities = ["SUST", "BUET", "DU", "JU", "IUT", "BRAC", "PUST","RU","MIST", "BUP","AIUB"];
-  const departments = ["CSE", "SWE", "EEE", "CEE", "PHY", "MAT", "CHE"];
-  const courses = ["Database", "Architecture", "AI", "ML", "SRE", "Datastructure", "OS", "OOP"];
+  const universities = [ "SUST", "BUET", "DU", "JU", "IUT", "BRAC", "PUST", "RU", "MIST", "BUP", "AIUB",
+    "NSU", "EWU", "DIU", "ULAB", "UIU", "IUB", "SEU", "AUST", "UAP"];
+  const departments = [ "CSE", "SWE", "EEE", "CEE", "PHY", "MAT", "CHE",
+    "BBA", "ECO", "LAW", "SOC", "ENG", "BIO", "ARC"];
+  const courses = [    "Database", "Architecture", "AI", "ML", "SRE", "Datastructure", "OS", "OOP",
+    "Economics", "Business Law", "Sociology", "Literature", "Biology", "Physics", "Chemistry"];
 
   return (
     <div
