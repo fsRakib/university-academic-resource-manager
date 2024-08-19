@@ -1,6 +1,7 @@
-
 export default function Home() {
   return (
-    <h1>fsRakib</h1>
+    <div className="flex w-full items-center justify-center p-4 text-6xl bg-black h-screen text-white">
+      Rakib
+    </div>
   );
 }

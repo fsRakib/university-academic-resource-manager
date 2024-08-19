@@ -5,22 +5,17 @@ import SearchDropdown from "../../components/SearchDropdown";
 import { FaUniversity } from "react-icons/fa";
 import { PiTreeViewFill } from "react-icons/pi";
 import { FaBookOpen } from "react-icons/fa";
+import { useDataContext } from "../../context/DataContext"
 
 function Home() {
+  const { universities, departments, courses } = useDataContext();
   const [university, setUniversity] = useState("");
   const [department, setDepartment] = useState("");
   const [course, setCourse] = useState("");
 
-  const universities = [ "SUST", "BUET", "DU", "JU", "IUT", "BRAC", "PUST", "RU", "MIST", "BUP", "AIUB",
-    "NSU", "EWU", "DIU", "ULAB", "UIU", "IUB", "SEU", "AUST", "UAP"];
-  const departments = [ "CSE", "SWE", "EEE", "CEE", "PHY", "MAT", "CHE",
-    "BBA", "ECO", "LAW", "SOC", "ENG", "BIO", "ARC"];
-  const courses = [    "Database", "Architecture", "AI", "ML", "SRE", "Datastructure", "OS", "OOP",
-    "Economics", "Business Law", "Sociology", "Literature", "Biology", "Physics", "Chemistry"];
-
   return (
     <div
-      className="flex justify-center items-center min-h-screen bg-cover bg-center"
+      className="flex justify-center items-center w-full min-h-screen bg-cover bg-center"
       style={{ backgroundImage: "url('/campus-bg.jpg')" }}
     >
       <div className="w-96 bg-transparent border-2 border-white/10 backdrop-filter backdrop-blur-lg shadow-lg text-white rounded-lg p-8 opacity-100">
