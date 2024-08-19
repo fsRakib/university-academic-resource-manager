@@ -8,13 +8,14 @@ const SearchDropdown = ({
   setSelectedOption,
   icon,
   showLabel = true,
-  centered = true,
-  boxColor = "bg-white", // Default box color
-  textColor = "text-black", // Default text color
+  centered = false,
+  boxColor = "bg-white",
+  textColor = "text-black",
 }) => {
   const [isActive, setIsActive] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const dropdownRef = useRef(null);
+  const optionsRef = useRef(null);
 
   const sortedOptions = [...options].sort((a, b) => a.localeCompare(b));
   const filteredOptions = sortedOptions.filter((option) =>
@@ -40,6 +41,12 @@ const SearchDropdown = ({
     };
   }, []);
 
+  useEffect(() => {
+    if (dropdownRef.current && optionsRef.current) {
+      optionsRef.current.style.width = `${dropdownRef.current.offsetWidth}px`;
+    }
+  }, [isActive]);
+
   const toggleDropdown = (event) => {
     event.stopPropagation(); // Prevent the event from propagating to document
     setIsActive((prevState) => !prevState);
@@ -54,9 +61,11 @@ const SearchDropdown = ({
         className={`relative flex items-center justify-between h-12 p-4 border-2 border-gray-600 rounded-lg cursor-pointer ${boxColor} ${textColor}`}
         onClick={toggleDropdown}
       >
-        <div className="flex items-center">
+        <div className="flex items-center w-full">
           {icon && <span className="mr-2">{icon}</span>}
-          <span className={`mx-1 ${textColor}`}>
+          <span
+            className={`mx-1 truncate ${textColor} w-full overflow-hidden whitespace-nowrap text-ellipsis`}
+          >
             {selectedOption || `Select ${label}`}
           </span>
         </div>
@@ -68,11 +77,12 @@ const SearchDropdown = ({
       </div>
       {isActive && (
         <div
+          ref={optionsRef}
           className={`${
             centered
-              ? "absolute left-1/2 top-full transform -translate-x-1/2"
-              : "absolute left-0 top-full"
-          } w-full mt-2 ${boxColor} border border-gray-600 rounded-lg shadow-lg z-10 max-h-80 overflow-hidden`}
+              ? "fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              : "absolute mt-2"
+          } ${boxColor} border border-gray-600 rounded-lg shadow-lg z-50 max-h-80 overflow-hidden`}
         >
           <div className="relative flex items-center p-4">
             <FaSearch className="ml-4 absolute left-4 text-gray-400" />
@@ -89,7 +99,8 @@ const SearchDropdown = ({
               filteredOptions.map((option, index) => (
                 <li
                   key={index}
-                  className={`px-4 py-2 ${textColor} rounded-lg cursor-pointer hover:bg-gray-300 hover:text-black`}
+                  className={`px-4 py-2 ${textColor} truncate rounded-lg cursor-pointer hover:bg-gray-300 hover:text-black`}
+                  title={option} // Show full text on hover
                   onClick={() => handleOptionClick(option)}
                 >
                   {option}

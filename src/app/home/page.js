@@ -32,6 +32,7 @@ function Home() {
             options={universities}
             selectedOption={university}
             setSelectedOption={setUniversity}
+            centered={true}
             icon={<FaUniversity />}
           />
           <SearchDropdown
@@ -39,6 +40,7 @@ function Home() {
             options={departments}
             selectedOption={department}
             setSelectedOption={setDepartment}
+            centered={true}
             icon={<PiTreeViewFill /> }
           />
           <SearchDropdown
@@ -46,6 +48,7 @@ function Home() {
             options={courses}
             selectedOption={course}
             setSelectedOption={setCourse}
+            centered={true}
             icon={<FaBookOpen />}
           />
 
