@@ -64,7 +64,7 @@ function Login() {
           </button>
           <div className="text-sm text-black text-center mt-5">
             <p>
-              Don't have an account?{" "}
+              Don't have an account?
               <Link href="/register" className="text-white font-semibold hover:underline">
                 Register
               </Link>

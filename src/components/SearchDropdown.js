@@ -25,7 +25,7 @@ const SearchDropdown = ({
   const handleOptionClick = (option) => {
     setSelectedOption(option);
     setIsActive(false);
-    setSearchValue(""); // Clear the search field after selecting an option
+    setSearchValue(""); 
   };
 
   useEffect(() => {

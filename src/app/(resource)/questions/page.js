@@ -4,118 +4,8 @@ import React, { useState, useEffect } from "react";
 import SearchDropdown from "../../../components/SearchDropdown";
 import { useDataContext } from "../../../context/DataContext";
 
-const questions = [
-  {
-    name: "Ques1daD",
-    owner: "md. rakibul kabir",
-    year: 2022,
-    type: "Semester",
-    mark: "Mark",
-  },
-  {
-    name: "Ques2dscs",
-    owner: "siam ahmed",
-    year: 2022,
-    type: "Term Test",
-    mark: "Mark",
-  },
-  {
-    name: "Ques2SCSCZSC",
-    owner: "arka das",
-    year: 2022,
-    type: "Semester",
-    mark: "Mark",
-  },
-  {
-    name: "Ques2xvzcvzSnfgjhdtyaesegsegsdgstgw4twetw",
-    owner: "robin ahmed",
-    year: 2022,
-    type: "Semester",
-    mark: "Mark",
-  },
-  {
-    name: "Ques2xzvzxvz",
-    owner: "mahfuzul hasan siam",
-    year: 2022,
-    type: "Term Test",
-    mark: "Mark",
-  },
-  {
-    name: "Ques2vxfgsdvx",
-    owner: "rakib",
-    year: 2022,
-    type: "Semester",
-    mark: "Mark",
-  },
-  {
-    name: "Ques2cbxcbxcbxc",
-    owner: "rakib",
-    year: 2022,
-    type: "Term Test",
-    mark: "Mark",
-  },
-  {
-    name: "Ques2dgsdgzdzdgzdgzdgzd",
-    owner: "rakib",
-    year: 2022,
-    type: "Semester",
-    mark: "Mark",
-  },
-  {
-    name: "Ques2afzsdfzdfzdf",
-    owner: "rakib",
-    year: 2022,
-    type: "Semester",
-    mark: "Mark",
-  },
-  {
-    name: "Ques2zdgzdgzdgvzd",
-    owner: "rakib",
-    year: 2022,
-    type: "Semester",
-    mark: "Mark",
-  },
-  {
-    name: "Ques2zdvzxdvzxdcvzxcv",
-    owner: "rakib",
-    year: 2022,
-    type: "Semester",
-    mark: "Mark",
-  },
-  {
-    name: "Ques2zvxdvbxfcbx",
-    owner: "rakib",
-    year: 2022,
-    type: "Semester",
-    mark: "Mark",
-  },
-  {
-    name: "Ques2bxxfvxbvxcbvxc",
-    owner: "rakib",
-    year: 2022,
-    type: "Semester",
-    mark: "Mark",
-  },
-  {
-    name: "Ques2xxfbcnbcgncg",
-    owner: "rakib",
-    year: 2022,
-    type: "Semester",
-    mark: "Mark",
-  },
-  { name: "Ques2", owner: "rakib", year: 2022, type: "Semester", mark: "Mark" },
-  { name: "Ques2", owner: "rakib", year: 2022, type: "Semester", mark: "Mark" },
-  { name: "Ques2", owner: "rakib", year: 2022, type: "Semester", mark: "Mark" },
-  { name: "Ques2", owner: "rakib", year: 2022, type: "Semester", mark: "Mark" },
-  { name: "Ques2", owner: "rakib", year: 2022, type: "Semester", mark: "Mark" },
-  { name: "Ques2", owner: "rakib", year: 2022, type: "Semester", mark: "Mark" },
-  { name: "Ques2", owner: "rakib", year: 2022, type: "Semester", mark: "Mark" },
-  { name: "Ques2", owner: "rakib", year: 2022, type: "Semester", mark: "Mark" },
-  { name: "Ques2", owner: "rakib", year: 2022, type: "Semester", mark: "Mark" },
-];
-
 function Questions() {
-  const { courses } = useDataContext(); // Destructure shared data
+  const { courses, questions, questionTypes, years } = useDataContext(); // Destructure shared data
   const [isMounted, setIsMounted] = useState(false);
   const [questionType, setQuestionType] = useState("");
   const [year, setYear] = useState("");
@@ -125,9 +15,6 @@ function Questions() {
     setIsMounted(true);
     console.log("Question Type Selected:", questionType);
   }, []);
-
-  const questionTypes = ["Semester", "Term Test"];
-  const years = ["2020", "2021", "2022", "2023"];
 
   if (!isMounted) {
     return null;
