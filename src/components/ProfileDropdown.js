@@ -6,6 +6,8 @@ import { FaUserCircle } from "react-icons/fa";
 import { AiFillCaretDown } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { FaBookmark } from "react-icons/fa";
+import { doLogout } from "@/app/actions";
+import { BiLogOut } from "react-icons/bi";
 
 const ProfileDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,6 +57,19 @@ const ProfileDropdown = () => {
             <FaBookmark className="mr-2" />
             Bookmarks
           </Link>
+          <form
+            action={doLogout}
+            className="flex items-center px-3 py-2 text-gray-800 hover:bg-gray-200 hover:rounded-lg "
+            method="POST"
+          >
+            <button
+              type="submit"
+              className="flex items-center w-full text-left"
+            >
+              <BiLogOut className="mr-2.5 text-xl" />
+              Logout
+            </button>
+          </form>
         </div>
       )}
     </div>

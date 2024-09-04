@@ -8,8 +8,6 @@ import { FaBookOpen } from "react-icons/fa";
 import { useDataContext } from "@/context/DataContext";
 import Link from "next/link";
 import ProfileDropdown from "@/components/ProfileDropdown";
-// import { auth } from "@/lib/auth";
-// import { redirect } from "next/navigation";
 
   function Home() {
   const { universities, departments, courses } = useDataContext();

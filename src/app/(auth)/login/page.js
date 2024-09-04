@@ -15,7 +15,7 @@ function Login() {
   const [rememberMe, setRememberMe] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
-  async function onSubmit(event) {
+  async function onSubmit2(event) {
     event.preventDefault();
     try {
       const formData = new FormData(event.currentTarget);
@@ -26,7 +26,7 @@ function Login() {
         console.error(response.error);
         setError(response.error.message);
       } else {
-        router.push("/profile");
+        router.push("/home");
       }
     } catch (e) {
       console.error(e);
@@ -63,7 +63,7 @@ function Login() {
           <span className="px-2 text-black">OR</span>
           <hr className="w-full border-gray-600" />
         </div>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit2}>
           <div className="relative w-full h-12 my-8">
             <input
               type="email"
@@ -77,21 +77,21 @@ function Login() {
             </div>
           </div>
           <div className="relative w-full h-12 mb-4">
-      <input
-        type="password"
-        name="password"
-        id="password"
-        placeholder="Password"
-        className="w-full h-full bg-transparent border-2 border-gray-600 rounded-full px-5 py-3 text-black placeholder-gray-900 focus:outline-none focus:ring-2 focus:ring-black"
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-      />
-      {!isFocused && (
-        <div className="absolute right-5 top-1/2 transform -translate-y-1/2 text-xl text-gray-900">
-          <MdPassword />
-        </div>
-      )}
-    </div>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Password"
+              className="w-full h-full bg-transparent border-2 border-gray-600 rounded-full px-5 py-3 text-black placeholder-gray-900 focus:outline-none focus:ring-2 focus:ring-black"
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+            />
+            {!isFocused && (
+              <div className="absolute right-5 top-1/2 transform -translate-y-1/2 text-xl text-gray-900">
+                <MdPassword />
+              </div>
+            )}
+          </div>
           <div className="flex justify-between items-center text-sm mb-4 text-black">
             <label className="flex items-center">
               <input

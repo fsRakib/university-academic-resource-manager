@@ -20,12 +20,12 @@ export const POST = async (request) => {
   try {
     await createUser(newUser);
   } catch (err) {
-    return new NextResponse(error.mesage, {
+    return new NextResponse(error.message, {
       status: 500,
     });
   }
-
-  return new NextResponse("User has been created", {
-    status: 201,
-  });
+  return NextResponse.json("User registered successfully", { status: 200 });
+  // return new NextResponse("User has been created", {
+  //   status: 201,
+  // });
 };

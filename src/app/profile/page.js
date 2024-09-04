@@ -1,12 +1,13 @@
 import React from "react";
 import Image from "next/image";
 import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { doLogout } from "@/app/actions";
 
 async function Profile() {
   const session = await auth();
-  if (!session?.user) redirect("/login");
+  console.log("session : ", session);
+  console.log(session?.user?.email);
+  
 
   return (
     <div className="flex flex-col items-center w-full max-w-4xl min-h-screen bg-gray-200 p-4">
@@ -25,15 +26,19 @@ async function Profile() {
             <h1 className="text-3xl font-bold text-center mb-4">
               Welcome, {session?.user?.name}
             </h1>
-            <p className="font-bold text-center mb-4">
-              {session?.user?.email}
-            </p>
+            <p className="font-bold text-center mb-4">{session?.user?.email}</p>
           </div>
         ) : (
-          <div> {/* Added a parent <div> here */}
-            <h1 className="text-3xl my-2">
-              Welcome, {session?.user?.email}
+          <div>
+            {" "}
+            {/* Added a parent <div> here */}
+            <h1 className="text-3xl font-bold text-center mb-4">
+              Welcome, {session?.user?.name}
             </h1>
+            <p className="text-3xl ont-bold text-center mb-4">
+              {" "}
+              {session?.user?.email}
+            </p>
           </div>
         )}
         <div className="flex justify-center mt-auto">
