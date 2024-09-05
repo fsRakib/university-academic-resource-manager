@@ -4,7 +4,7 @@ const connection = {}; // An object to hold the connection state
 
 async function dbConnect() {
   if (connection.isConnected) {
-    console.log("Already connected to the database");
+    console.log("------------ Already connected to the database ------------");
     return;
   }
 
