@@ -7,10 +7,10 @@ const OptionSwitcher = ({ options, selectedOption, onSelectOption }) => {
         <button
           key={index}
           onClick={() => onSelectOption(option)}
-          className={`flex-1 px-6 py-2 transition-all duration-300 rounded-full ${
+          className={`flex-1 px-10 py-1.5 transition-all duration-300 rounded-full hover:bg-black hover:text-white ${
             selectedOption === option
               ? "bg-black text-white font-bold"
-              : "bg-white text-black font-normal"
+              : "bg-white text-black font-normal  border-2 border-black "
           } focus:outline-none`}
         >
           {option}

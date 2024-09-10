@@ -58,7 +58,7 @@ const SearchDropdown = ({
         <label className={`${textColor} block my-1`}>{label}</label>
       )}
       <div
-        className={`relative flex items-center justify-between h-12 p-4 border-2 border-gray-600 rounded-lg cursor-pointer ${boxColor} ${textColor}`}
+        className={`relative flex items-center justify-between h-11 p-4 border-2 border-gray-600 rounded-lg cursor-pointer ${boxColor} ${textColor}`}
         onClick={toggleDropdown}
       >
         <div className="flex items-center w-full">
@@ -88,7 +88,7 @@ const SearchDropdown = ({
             <FaSearch className="ml-4 absolute left-4 text-gray-400" />
             <input
               type="text"
-              className={`w-full h-12 pl-9 pr-4  ${textColor} ${boxColor} border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800`}
+              className={`w-full h-11 pl-9 pr-4  ${textColor} ${boxColor} border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800`}
               placeholder={`Search ${label.toLowerCase()}`}
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}

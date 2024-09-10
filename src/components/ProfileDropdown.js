@@ -64,7 +64,7 @@ const ProfileDropdown = () => {
           >
             <button
               type="submit"
-              className="flex items-center w-full text-left"
+              className="flex items-center w-full text-left "
             >
               <BiLogOut className="mr-2.5 text-xl" />
               Logout

@@ -1,14 +1,16 @@
 "use client";
 import { useState } from "react";
-import { FaUsersCog } from "react-icons/fa";
+import {
+  FaUsersCog,
+  FaUniversity,
+  FaCalendarAlt,
+  FaUserAlt,
+} from "react-icons/fa";
 import { GrUpdate } from "react-icons/gr";
-import { FaUniversity } from "react-icons/fa";
-import { FaCalendarAlt } from "react-icons/fa";
-import { FaPhoneVolume } from "react-icons/fa6";
+import { FaPhoneVolume, FaAddressCard } from "react-icons/fa6";
 import { TbGenderBigender } from "react-icons/tb";
-import { FaAddressCard } from "react-icons/fa6";
 import { MdAccountTree } from "react-icons/md";
-import { FaUserAlt } from "react-icons/fa";
+
 
 export default function UpdateProfile({ user, onUpdate }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,7 +61,7 @@ export default function UpdateProfile({ user, onUpdate }) {
   return (
     <>
       <button
-        className="flex justify-center items-center bg-black text-white font-bold w-full px-4 py-2 rounded-xl"
+        className="flex justify-center items-center bg-black text-white hover:bg-gray-500 hover:text-black font-bold w-full px-4 py-2 rounded-xl"
         onClick={() => setIsOpen(true)}
       >
         <FaUsersCog className="mr-4 text-xl" />
@@ -180,7 +182,7 @@ export default function UpdateProfile({ user, onUpdate }) {
                   onClick={handleSubmit}
                   className={`${
                     loading ? "bg-gray-500" : "bg-black"
-                  } text-white flex items-center justify-center font-bold hover:bg-white hover:text-black px-6 py-2 rounded-lg`}
+                  }  flex items-center justify-center  font-bold text-white hover:bg-white hover:text-black px-6 py-2 rounded-lg`}
                   disabled={loading}
                 >
                   <GrUpdate className="mr-4" />

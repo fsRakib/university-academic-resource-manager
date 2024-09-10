@@ -35,10 +35,7 @@ function Login() {
   }
 
   return (
-    <div
-      className="flex justify-center items-center w-full min-h-screen bg-cover bg-center"
-      style={{ backgroundImage: "url('/campus-bg.jpg')" }}
-    >
+    
       <div className="w-96 bg-transparent border-2 border-white/10 backdrop-filter backdrop-blur-lg shadow-lg text-white rounded-lg p-8 opacity-100">
         <h1 className="text-black text-3xl font-bold text-center">Login</h1>
         <p className="text-black text-center mb-6 ">Welcome again!</p>
@@ -119,13 +116,13 @@ function Login() {
                 href="register"
                 className="text-white font-semibold hover:underline ml-1"
               >
-                Register
+                Sign up
               </Link>
             </p>
           </div>
         </form>
       </div>
-    </div>
+    
   );
 }
 

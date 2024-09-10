@@ -133,19 +133,20 @@ function UserProfile() {
         </div>
       </div>
       
-      <div className="flex space-x-2 mt-2">
-        <div className="flex-grow">
+      <div className="flex gap-4 mt-2">
+        <div className="w-1/2">
           <form action={doLogout} method="POST">
             <button
               type="submit"
-              className="flex items-center justify-center font-bold w-full  px-4 py-2  text-center bg-black text-white rounded-xl"
+              className="flex items-center justify-center font-bold w-full  px-4 py-2  text-center bg-black text-white hover:bg-gray-500 hover:text-black rounded-xl"
             >
               <BiLogOut className="mr-4 text-xl" />
               Logout
             </button>
+
           </form>
         </div>
-        <div className="flex-grow">
+        <div className="w-1/2">
           <UpdateProfile user={user} onUpdate={handleUpdate} />
         </div>
       </div>

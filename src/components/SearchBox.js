@@ -15,8 +15,8 @@ const SearchComponent = () => {
   };
 
   return (
-    <div id="search-bar" class=" bg-black  shadow-lg rounded-lg h-12 w-full">
-      <form class="flex p-1 h-full">
+    <div id="search-bar" class=" bg-black  shadow-lg rounded-lg h-11 w-full">
+      <form class="flex px-4 py-0.5 h-full">
         <input
           type="text"
           placeholder="Search..."
