@@ -7,6 +7,7 @@ const questionSchema = new Schema({
   ownerId: { type: Schema.Types.ObjectId, ref: "user", required: true },
   name: { type: String, required: true },
   questionType: { type: String, enum: ["semester", "term test"], required: true },
+  fileUrl: { type: String, required: true },
   marked: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
@@ -14,3 +15,4 @@ const questionSchema = new Schema({
 
 export const Question =
   mongoose.models.question ?? mongoose.model("question", questionSchema);
+

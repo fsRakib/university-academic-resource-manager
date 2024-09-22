@@ -36,5 +36,6 @@ export const config = {
     "/questions",
     "/books",
     "/notes",
+    "/admin"
   ],
 };

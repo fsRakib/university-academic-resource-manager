@@ -6,6 +6,7 @@ const noteSchema = new Schema({
   courseId: { type: Schema.Types.ObjectId, ref: "course", required: true },
   ownerId: { type: Schema.Types.ObjectId, ref: "user", required: true },
   name: { type: String, required: true },
+  fileUrl: { type: String, required: true }, 
   marked: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },

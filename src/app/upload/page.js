@@ -1,78 +1,41 @@
-"use client"; // To ensure the page uses client-side rendering
+"use client";
+import React, { useState } from "react";
 
-import { useState } from "react";
-import SearchDropdown from "@/components/SearchDropdown";
-import { useDataContext } from "@/context/DataContext";
+function Upload() {
+  const [file, setFile] = useState();
 
-function UploadPage() {
-  const [file, setFile] = useState(null);
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    console.log("file is",file);
+    const data = new FormData();
+    data.set("file", file);
 
-  const { questionTypes, years } = useDataContext();
-  const [questionType, setQuestionType] = useState("");
-  const [year, setYear] = useState("");
-
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
-
-  const handleUpload = () => {
-    // Add your upload logic here
-    alert("File uploaded!");
+    const result = await fetch("api/upload", {
+      method: "POST",
+      body: data,
+    });
+    console.log("your result is",result);
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full min-h-screen bg-cover bg-center">
-      <div className="bg-gray-400 rounded-lg p-6 w-96 shadow-lg space-y-6">
-        <h2 className="text-center text-lg font-semibold ">
-          Upload Your
-          <span className="underline text-black font-bold ml-2">Questions</span>
-        </h2>
-
-        <div>
-          <SearchDropdown
-            label="Question Type"
-            options={questionTypes}
-            selectedOption={questionType}
-            setSelectedOption={setQuestionType}
-            showLabel={false}
-            centered={false}
-            boxColor="bg-black"
-            textColor="text-white"
-          />
-        </div>
-
-        <div>
-          <SearchDropdown
-            label="Year"
-            options={years}
-            selectedOption={year}
-            setSelectedOption={setYear}
-            showLabel={false}
-            centered={false}
-            boxColor="bg-black"
-            textColor="text-white"
-          />
-        </div>
-
-        {/* File Input */}
-        <div className="flex items-center justify-center">
-          <input
-            type="file"
-            className="border w-full p-2 rounded-md"
-            onChange={handleFileChange}
-          />
-        </div>
-
-        {/* Upload Button */}
+    <div>
+      <h1 className="text-4xl font-extrabold underline">Upload Image</h1>
+      <br />
+      <form onSubmit={onSubmit}>
+        <input
+          type="file"
+          name="file"
+          onChange={(e) => setFile(e.target.files?.[0])}
+        />
         <button
-          className="w-full bg-yellow-500 text-white p-2 rounded-md hover:bg-yellow-600 transition duration-200"
-          onClick={handleUpload}
+          className="border-2 rounded-xl px-4 py-1 border-black"
+          type="submit"
         >
-          Upload
+          Upload Image
         </button>
-      </div>
+      </form>
     </div>
   );
 }
 
-export default UploadPage;
+export default Upload;

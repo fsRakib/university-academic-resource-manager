@@ -8,6 +8,7 @@ const bookSchema = new Schema({
   name: { type: String, required: true },
   author: { type: String },
   edition: { type: String },
+  fileUrl: { type: String, required: true },
   marked: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
@@ -15,3 +16,4 @@ const bookSchema = new Schema({
 
 export const Book =
   mongoose.models.book ?? mongoose.model("book", bookSchema);
+
