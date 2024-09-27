@@ -22,6 +22,7 @@ export default function AddCourseDialog({ isOpen, onClose, onSuccess }) {
         // Check if the data is an array
         if (Array.isArray(data)) {
           setUniversities(data);
+          
         } else {
           console.error("Expected array but got:", data);
         }
@@ -29,7 +30,7 @@ export default function AddCourseDialog({ isOpen, onClose, onSuccess }) {
       fetchUniversities();
     }
   }, [isOpen]);
-
+  console.log(" selecteted universities:", selectedUniversity);
   // Fetch departments when a university is selected
   useEffect(() => {
     if (selectedUniversity) {
@@ -38,6 +39,7 @@ export default function AddCourseDialog({ isOpen, onClose, onSuccess }) {
           `/api/admin/department?universityId=${selectedUniversity}`
         );
         const data = await res.json();
+        console.log("Fetched dept:", data);
         setDepartments(data);
       }
       fetchDepartments();

@@ -1,51 +1,9 @@
 "use client";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext } from "react";
 
-// Create the context
 const DataContext = createContext();
 
-// Create a provider component
 export const DataProvider = ({ children }) => {
-  const universities = [
-    "Shahjalal University of Science and Technology",
-    "Bangladesh University of Engineering and Technology",
-    "University of Dhaka",
-    "Jahangirnagar University",
-    "Islamic University of Technology",
-    "BRAC University",
-    "Pabna University of Science and Technology",
-    "University of Rajshahi",
-    "Military Institute of Science and Technology",
-    "Bangladesh University of Professionals",
-    "American International University-Bangladesh",
-    "North South University",
-    "East West University",
-    "Daffodil International University",
-    "University of Liberal Arts Bangladesh",
-    "United International University",
-    "Independent University, Bangladesh",
-    "Southeast University",
-    "Ahsanullah University of Science and Technology",
-    "University of Asia Pacific",
-  ];
-
-  const departments = [
-    "CSE",
-    "SWE",
-    "EEE",
-    "CEE",
-    "PHY",
-    "MAT",
-    "CHE",
-    "BBA",
-    "ECO",
-    "LAW",
-    "SOC",
-    "ENG",
-    "BIO",
-    "ARC",
-  ];
-
   const courses = [
     "Database",
     "Architecture",
@@ -63,170 +21,8 @@ export const DataProvider = ({ children }) => {
     "Physics",
     "Chemistry",
   ];
-  const questions = [
-    {
-      name: "Ques1daD",
-      owner: "md. rakibul kabir",
-      year: 2024,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2dscs",
-      owner: "siam ahmed",
-      year: 2024,
-      type: "Term Test",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2SCSCZSC",
-      owner: "arka das",
-      year: 2024,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2xvzcvzSnfgjhdtyaesegsegsdgstgw4twetw",
-      owner: "robin ahmed",
-      year: 2023,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2xzvzxvz",
-      owner: "mahfuzul hasan siam",
-      year: 2023,
-      type: "Term Test",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2vxfgsdvx",
-      owner: "rakib",
-      year: 2023,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2cbxcbxcbxc",
-      owner: "rakib",
-      year: 2022,
-      type: "Term Test",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2dgsdgzdzdgzdgzdgzd",
-      owner: "rakib",
-      year: 2022,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2afzsdfzdfzdf",
-      owner: "rakib",
-      year: 2021,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2zdgzdgzdgvzd",
-      owner: "rakib",
-      year: 2021,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2zdvzxdvzxdcvzxcv",
-      owner: "rakib",
-      year: 2021,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2zvxdvbxfcbx",
-      owner: "rakib",
-      year: 2020,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2bxxfvxbvxcbvxc",
-      owner: "rakib",
-      year: 2020,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2xxfbcnbcgncg",
-      owner: "rakib",
-      year: 2020,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2",
-      owner: "rakib",
-      year: 2019,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2",
-      owner: "rakib",
-      year: 2019,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2",
-      owner: "rakib",
-      year: 2019,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2",
-      owner: "rakib",
-      year: 2019,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2",
-      owner: "rakib",
-      year: 2019,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2",
-      owner: "rakib",
-      year: 2019,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2",
-      owner: "rakib",
-      year: 2019,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2",
-      owner: "rakib",
-      year: 2018,
-      type: "Semester",
-      mark: "Mark",
-    },
-    {
-      name: "Ques2",
-      owner: "rakib",
-      year: 2018,
-      type: "Semester",
-      mark: "Mark",
-    },
-  ];
-  const questionTypes = ["Semester", "Term Test"];
+
+  const questionTypes = ["semester", "term test"];
   const years = ["2020", "2021", "2022", "2023"];
 
   const books = [
@@ -484,16 +280,12 @@ export const DataProvider = ({ children }) => {
       date: "2023-08-21",
       mark: "Mark",
     },
-    // Add more notes as needed
   ];
 
   return (
     <DataContext.Provider
       value={{
-        universities,
-        departments,
         courses,
-        questions,
         questionTypes,
         years,
         books,

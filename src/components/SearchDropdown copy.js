@@ -17,15 +17,13 @@ const SearchDropdown = ({
   const dropdownRef = useRef(null);
   const optionsRef = useRef(null);
 
-  const sortedOptions = [...options].sort((a, b) =>
-    a.label.localeCompare(b.label)
-  );
+  const sortedOptions = [...options].sort((a, b) => a.localeCompare(b));
   const filteredOptions = sortedOptions.filter((option) =>
-    option.label.toLowerCase().includes(searchValue.toLowerCase())
+    option.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   const handleOptionClick = (option) => {
-    setSelectedOption(option.value); // Now setting only the value (ID)
+    setSelectedOption(option);
     setIsActive(false);
     setSearchValue("");
   };
@@ -68,10 +66,7 @@ const SearchDropdown = ({
           <span
             className={`mx-1 truncate ${textColor} w-full overflow-hidden whitespace-nowrap text-ellipsis`}
           >
-            {selectedOption
-              ? options.find((opt) => opt.value === selectedOption)?.label
-              : `Select ${label}`}{" "}
-            {/* Display label */}
+            {selectedOption || `Select ${label}`}
           </span>
         </div>
         <FaAngleDown
@@ -105,10 +100,10 @@ const SearchDropdown = ({
                 <li
                   key={index}
                   className={`px-4 py-2 ${textColor} truncate rounded-lg cursor-pointer hover:bg-gray-300 hover:text-black`}
-                  title={option.label} // Show full text on hover
-                  onClick={() => handleOptionClick(option)} // Pass only the value (ID)
+                  title={option} // Show full text on hover
+                  onClick={() => handleOptionClick(option)}
                 >
-                  {option.label} {/* Render the label */}
+                  {option}
                 </li>
               ))
             ) : (

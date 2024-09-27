@@ -1,61 +1,47 @@
 "use client";
 import { useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
-import SearchDropdown from "../components/SearchDropdown copy";
+import SearchDropdown from "@/components/SearchDropdown";
 import { useDataContext } from "@/context/DataContext";
-import { useSession } from "next-auth/react";
-import { useResourceContext } from "@/context/ResourceContext";
 
 export default function FileUploadQuestions() {
-  const { universityId, departmentId, courseId } = useResourceContext();
-  const { data: session } = useSession();
   const { questionTypes, years } = useDataContext();
-
   const [questionType, setQuestionType] = useState("");
   const [year, setYear] = useState("");
-  const [file, setFile] = useState(null);
+
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  if (!session) {
-    return <p>Not logged in</p>;
-  }
+  const [formData, setFormData] = useState({
+    file: null,
+    type: "",
+    year: "",
+  });
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    setFormData((prevData) => ({
+      ...prevData,
+      file: e.target.files[0],
+    }));
   };
 
   const handleSubmit = async () => {
-    if (!file || !questionType || !year) {
-      console.error("Missing required fields");
-      return;
-    }
-
     setLoading(true);
-    console.log("Dialog with IDs: ", universityId, departmentId, courseId);
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("questionType", questionType);
-    formData.append("year", year);
-
-    formData.append("universityId", universityId);
-    formData.append("departmentId", departmentId);
-    formData.append("courseId", courseId);
-    formData.append("ownerId", session.user.id);
+    const formDataToSend = new FormData();
+    formDataToSend.append("file", formData.file);
+    formDataToSend.append("type", questionType);
+    formDataToSend.append("year", year);
 
     try {
-      const res = await fetch("/api/questions", {
+      const res = await fetch("/api/upload", {
         method: "POST",
-        body: formData,
+        body: formDataToSend,
       });
 
       if (res.ok) {
         console.log("File uploaded successfully");
         setIsUploadDialogOpen(false);
       } else {
-        const errorData = await res.json();
-        console.error("Failed to upload file", errorData);
+        console.error("Failed to upload file");
       }
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -77,10 +63,10 @@ export default function FileUploadQuestions() {
       </div>
 
       {isUploadDialogOpen && (
-        <div className="flex justify-center items-center fixed inset-0 bg-gray-900 bg-opacity-70 z-20">
-          <div className="bg-teal-200 px-14 py-10 shadow-lg rounded-xl space-y-6 w-auto ">
+        <div className="flex justify-center items-center fixed inset-0 bg-gray-900 bg-opacity-70">
+          <div className="bg-teal-200 px-14 py-10 shadow-lg rounded-xl space-y-6 w-auto">
             <div>
-              <h1 className="text-center text-xl font-semibold">
+            <h1 className="text-center text-xl font-semibold">
                 Upload Your
                 <span className="underline text-black font-bold ml-2">
                   Questions

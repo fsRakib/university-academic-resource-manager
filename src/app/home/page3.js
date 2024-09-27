@@ -7,21 +7,14 @@ import { PiTreeViewFill } from "react-icons/pi";
 import { FaBookOpen } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import ProfileDropdown from "@/components/ProfileDropdown";
-import {useResourceContext} from "../../context/ResourceContext"
 
 function Home() {
   const [universities, setUniversities] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [courses, setCourses] = useState([]);
-
-  const {
-    universityId,
-    departmentId,
-    courseId,
-    setUniversityId,
-    setDepartmentId,
-    setCourseId,
-  } = useResourceContext();
+  const [universityId, setUniversityId] = useState("");
+  const [departmentId, setDepartmentId] = useState("");
+  const [courseId, setCourseId] = useState("");
 
   const router = useRouter();
 
@@ -43,6 +36,7 @@ function Home() {
           `/api/admin/department?universityId=${universityId}`
         );
         const data = await res.json();
+        // console.log("Departments API response:", data); 
         setDepartments(Array.isArray(data) ? data : []); 
       }
       fetchDepartments();
@@ -74,7 +68,7 @@ function Home() {
     }
   };
 
-  console.log("Home with IDs: ", universityId, departmentId, courseId);
+  console.log("IDs: ",universityId, departmentId, courseId);
   
   return (
     <div
