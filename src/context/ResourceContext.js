@@ -3,7 +3,6 @@
 
 // const ResourceContext = createContext();
 
-
 // export const useResourceContext = () => useContext(ResourceContext);
 
 // export const ResourceProvider = ({ children }) => {
@@ -28,49 +27,50 @@
 //   );
 // };
 
-
-"use client"
+"use client";
 import { createContext, useContext, useState, useEffect } from "react";
 
-// Create ResourceContext
 const ResourceContext = createContext();
 
-export function ResourceProvider({ children }) {
-  const [universityId, setUniversityId] = useState(null);
-  const [departmentId, setDepartmentId] = useState(null);
-  const [courseId, setCourseId] = useState(null);
+export const ResourceProvider = ({ children }) => {
+  const [universityId, setUniversityId] = useState("");
+  const [departmentId, setDepartmentId] = useState("");
+  const [courseId, setCourseId] = useState("");
 
-  // Optional: If you want to persist these values in localStorage
+  // Load from session storage on initial render
   useEffect(() => {
-    const storedUniversityId = localStorage.getItem("universityId");
-    const storedDepartmentId = localStorage.getItem("departmentId");
-    const storedCourseId = localStorage.getItem("courseId");
+    const storedUniversityId = sessionStorage.getItem("universityId");
+    const storedDepartmentId = sessionStorage.getItem("departmentId");
+    const storedCourseId = sessionStorage.getItem("courseId");
 
     if (storedUniversityId) setUniversityId(storedUniversityId);
     if (storedDepartmentId) setDepartmentId(storedDepartmentId);
     if (storedCourseId) setCourseId(storedCourseId);
   }, []);
 
+  // Save to session storage when values change
   useEffect(() => {
-    if (universityId) localStorage.setItem("universityId", universityId);
-    if (departmentId) localStorage.setItem("departmentId", departmentId);
-    if (courseId) localStorage.setItem("courseId", courseId);
+    sessionStorage.setItem("universityId", universityId);
+    sessionStorage.setItem("departmentId", departmentId);
+    sessionStorage.setItem("courseId", courseId);
   }, [universityId, departmentId, courseId]);
 
   return (
     <ResourceContext.Provider
       value={{
         universityId,
-        departmentId,
-        courseId,
         setUniversityId,
+        departmentId,
         setDepartmentId,
+        courseId,
         setCourseId,
       }}
     >
       {children}
     </ResourceContext.Provider>
   );
-}
+};
 
-export const useResourceContext = () => useContext(ResourceContext);
+export const useResourceContext = () => {
+  return useContext(ResourceContext);
+};

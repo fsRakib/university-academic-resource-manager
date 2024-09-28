@@ -11,7 +11,6 @@ export async function GET(req) {
   const departmentId = searchParams.get("departmentId");
   const courseId = searchParams.get("courseId");
 
-  // Check if all required query parameters are present
   if (!universityId || !departmentId || !courseId) {
     return NextResponse.json(
       { message: "Missing required query parameters" },
@@ -20,14 +19,12 @@ export async function GET(req) {
   }
 
   try {
-    // Find questions based on universityId, departmentId, and courseId
     const questions = await Question.find({
       universityId,
       departmentId,
       courseId,
     });
 
-    // If no questions found, return an empty array
     if (questions.length === 0) {
       return NextResponse.json(
         { message: "No questions found" },
@@ -35,7 +32,6 @@ export async function GET(req) {
       );
     }
 
-    // Return the found questions
     return NextResponse.json(questions, { status: 200 });
   } catch (error) {
     console.error("Error retrieving questions:", error);

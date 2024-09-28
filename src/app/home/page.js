@@ -7,7 +7,7 @@ import { PiTreeViewFill } from "react-icons/pi";
 import { FaBookOpen } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import ProfileDropdown from "@/components/ProfileDropdown";
-import {useResourceContext} from "../../context/ResourceContext"
+import { useResourceContext } from "@/context/ResourceContext";
 
 function Home() {
   const [universities, setUniversities] = useState([]);
@@ -43,11 +43,11 @@ function Home() {
           `/api/admin/department?universityId=${universityId}`
         );
         const data = await res.json();
-        setDepartments(Array.isArray(data) ? data : []); 
+        setDepartments(Array.isArray(data) ? data : []);
       }
       fetchDepartments();
     } else {
-      setDepartments([]); 
+      setDepartments([]);
     }
   }, [universityId]);
 
@@ -55,9 +55,11 @@ function Home() {
   useEffect(() => {
     if (departmentId) {
       async function fetchCourses() {
-        const res = await fetch(`/api/admin/course?departmentId=${departmentId}`);
+        const res = await fetch(
+          `/api/admin/course?departmentId=${departmentId}`
+        );
         const data = await res.json();
-        setCourses(Array.isArray(data) ? data : []); 
+        setCourses(Array.isArray(data) ? data : []);
       }
       fetchCourses();
     } else {
@@ -75,7 +77,7 @@ function Home() {
   };
 
   console.log("Home with IDs: ", universityId, departmentId, courseId);
-  
+
   return (
     <div
       className="flex flex-col justify-center items-center w-full min-h-screen bg-cover bg-center"
@@ -101,7 +103,12 @@ function Home() {
               value: uni._id,
             }))}
             selectedOption={universityId}
-            setSelectedOption={(value) => setUniversityId(value)} 
+            // setSelectedOption={(value) => setUniversityId(value)}
+            setSelectedOption={(value) => {
+              setUniversityId(value);
+              setDepartmentId(""); // Clear department selection
+              setCourseId(""); // Clear course selection
+            }}
             centered={true}
             icon={<FaUniversity />}
           />
@@ -113,7 +120,11 @@ function Home() {
               value: dept._id,
             }))}
             selectedOption={departmentId}
-            setSelectedOption={(value) => setDepartmentId(value)} 
+            // setSelectedOption={(value) => setDepartmentId(value)}
+            setSelectedOption={(value) => {
+              setDepartmentId(value);
+              setCourseId(""); // Clear course selection
+            }}
             centered={true}
             icon={<PiTreeViewFill />}
           />

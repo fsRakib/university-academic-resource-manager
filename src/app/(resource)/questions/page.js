@@ -103,7 +103,7 @@ function Questions() {
               </thead>
               <tbody>
                 {questions.map((question) => (
-                  <tr key={question._id}>
+                  <tr key={question._id} className="hover:bg-gray-300 cursor-pointer">
                     <td className="border-b-2 px-4 py-2 text-start w-[40%]">
                       {question.name}
                     </td>
