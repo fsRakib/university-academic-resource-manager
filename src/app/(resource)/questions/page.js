@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import SearchDropdown from "@/components/SearchDropdown copy";
 import { useDataContext } from "@/context/DataContext";
+import FilePreview from "@/components/FilePreviewModal";
 
 function Questions() {
   const { questionTypes, years, courses } = useDataContext();
@@ -12,6 +13,9 @@ function Questions() {
   const [selectedCourse, setSelectedCourse] = useState("");
 
   const [questions, setQuestions] = useState([]);
+  const [previewFile, setPreviewFile] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false);
+
   const searchParams = useSearchParams();
   const universityId = searchParams.get("university");
   const departmentId = searchParams.get("department");
@@ -41,8 +45,19 @@ function Questions() {
     }
   }, [universityId, departmentId, courseId]);
 
+  const handleDoubleClick = (question) => {
+    setPreviewFile(question.fileUrl);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setPreviewFile(null);
+  };
+
   if (!questions.length) {
-    return <p>No questions found for the selected options.</p>;
+    // return <p>No questions found for the selected options.</p>;
+    return null;
   }
   console.log("Question with IDs: ", universityId, departmentId, courseId);
   return (
@@ -86,12 +101,10 @@ function Questions() {
         </div>
       </div>
 
-      <div className="flex-grow w-full overflow-hidden h-full">
-        <div className="w-full h-full flex flex-col">
-          <div className="overflow-y-auto flex-grow rounded-lg h-[400px]">
-            {" "}
-            {/* Set a fixed height */}
-            <table className="w-full bg-white table-fixed rounded-lg">
+      <div className="flex-grow w-full overflow-hidden h-full ">
+        <div className="w-full h-full flex flex-col ">
+          <div className="overflow-y-auto flex-grow rounded-lg h-[400px] bg-white">
+            <table className="w-full  table-fixed rounded-lg ">
               <thead className="bg-gray-700 text-white sticky top-0 z-10">
                 <tr>
                   <th className="px-4 py-2 text-start w-[30%]">Name</th>
@@ -103,7 +116,11 @@ function Questions() {
               </thead>
               <tbody>
                 {questions.map((question) => (
-                  <tr key={question._id} className="hover:bg-gray-300 cursor-pointer">
+                  <tr
+                    key={question._id}
+                    className="hover:bg-gray-300 cursor-pointer"
+                    onDoubleClick={() => handleDoubleClick(question)}
+                  >
                     <td className="border-b-2 px-4 py-2 text-start w-[40%]">
                       {question.name}
                     </td>
@@ -126,6 +143,24 @@ function Questions() {
           </div>
         </div>
       </div>
+
+      {isModalOpen && previewFile && (
+        <FilePreview onClose={closeModal}>
+          {previewFile.endsWith(".pdf") ? (
+            <iframe
+              src={`${previewFile}#toolbar=0`} // Disable the toolbar
+              className="w-full h-full"
+              title="PDF Preview"
+            />
+          ) : (
+            <img
+              src={previewFile}
+              alt="Question Preview"
+              className="w-full h-full object-contain"
+            />
+          )}
+        </FilePreview>
+      )}
     </div>
   );
 }

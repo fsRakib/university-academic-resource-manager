@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import OptionSwitcher from "../components/OptionSwitcher";
 import { useRouter } from "next/navigation";
-// Import the three file upload components
 import FileUploadQuestions from "@/components/UploadQuestions";
 import FileUploadBooks from "@/components/UploadBooks";
 import FileUploadNotes from "@/components/UploadNotes";
