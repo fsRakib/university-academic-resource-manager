@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import OptionSwitcher from "../components/OptionSwitcher";
 import { useRouter } from "next/navigation";
 import FileUploadQuestions from "@/components/UploadQuestions";
@@ -10,6 +10,19 @@ function Header() {
   const router = useRouter();
   const [selectedOption, setSelectedOption] = useState("Questions");
   const options = ["Questions", "Books", "Notes"];
+
+  useEffect(() => {
+    // Get the current pathname to determine the selected option
+    const currentPath = window.location.pathname;
+
+    if (currentPath.includes("/questions")) {
+      setSelectedOption("Questions");
+    } else if (currentPath.includes("/books")) {
+      setSelectedOption("Books");
+    } else if (currentPath.includes("/notes")) {
+      setSelectedOption("Notes");
+    }
+  }, []);
 
   // Handle the option switching
   const handleSelectOption = (option) => {

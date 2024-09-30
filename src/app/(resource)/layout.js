@@ -6,7 +6,7 @@ export default function ResourceLayout({ children }) {
     <div className=" flex flex-col flex-grow max-w-4xl">
       
         <Header />
-        {children}
+        {children }
      
     </div>
   );

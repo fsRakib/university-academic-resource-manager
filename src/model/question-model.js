@@ -7,6 +7,7 @@ const questionSchema = new Schema({
   ownerId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   name: { type: String, required: true },
   questionType: { type: String, enum: ["semester", "term test"], required: true },
+  year: { type: String },
   fileUrl: { type: String, required: true },
   marked: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },

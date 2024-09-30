@@ -10,9 +10,9 @@ import ProfileDropdown from "@/components/ProfileDropdown";
 import { useResourceContext } from "@/context/ResourceContext";
 
 function Home() {
-  const [universities, setUniversities] = useState([]);
-  const [departments, setDepartments] = useState([]);
-  const [courses, setCourses] = useState([]);
+  // const [universities, setUniversities] = useState([]);
+  // const [departments, setDepartments] = useState([]);
+  // const [courses, setCourses] = useState([]);
 
   const {
     universityId,
@@ -21,6 +21,12 @@ function Home() {
     setUniversityId,
     setDepartmentId,
     setCourseId,
+    universities,
+    setUniversities,
+    departments,
+    setDepartments,
+    courses,
+    setCourses,
   } = useResourceContext();
 
   const router = useRouter();
@@ -33,7 +39,7 @@ function Home() {
       setUniversities(Array.isArray(data) ? data : []);
     }
     fetchUniversities();
-  }, []);
+  }, [setUniversities]);
 
   // Fetch departments when a university is selected
   useEffect(() => {
@@ -49,7 +55,7 @@ function Home() {
     } else {
       setDepartments([]);
     }
-  }, [universityId]);
+  }, [universityId, setDepartments]);
 
   // Fetch courses when a department is selected
   useEffect(() => {
@@ -65,7 +71,7 @@ function Home() {
     } else {
       setCourses([]);
     }
-  }, [departmentId]);
+  }, [departmentId, setCourses]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -103,11 +109,10 @@ function Home() {
               value: uni._id,
             }))}
             selectedOption={universityId}
-            // setSelectedOption={(value) => setUniversityId(value)}
             setSelectedOption={(value) => {
               setUniversityId(value);
-              setDepartmentId(""); // Clear department selection
-              setCourseId(""); // Clear course selection
+              setDepartmentId("");
+              setCourseId("");
             }}
             centered={true}
             icon={<FaUniversity />}
@@ -120,10 +125,9 @@ function Home() {
               value: dept._id,
             }))}
             selectedOption={departmentId}
-            // setSelectedOption={(value) => setDepartmentId(value)}
             setSelectedOption={(value) => {
               setDepartmentId(value);
-              setCourseId(""); // Clear course selection
+              setCourseId("");
             }}
             centered={true}
             icon={<PiTreeViewFill />}
@@ -136,7 +140,7 @@ function Home() {
               value: course._id,
             }))}
             selectedOption={courseId}
-            setSelectedOption={(value) => setCourseId(value)} // Pass the course ID
+            setSelectedOption={(value) => setCourseId(value)}
             centered={true}
             icon={<FaBookOpen />}
           />

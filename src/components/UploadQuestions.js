@@ -17,9 +17,9 @@ export default function FileUploadQuestions() {
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  if (!session) {
-    return <p>Not logged in</p>;
-  }
+  // if (!session) {
+  //   return <p>Not logged in</p>;
+  // }
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -36,7 +36,7 @@ export default function FileUploadQuestions() {
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("questionType", questionType);
+    formData.append("questionType", questionType); 
     formData.append("year", year);
 
     formData.append("universityId", universityId);
@@ -78,7 +78,7 @@ export default function FileUploadQuestions() {
 
       {isUploadDialogOpen && (
         <div className="flex justify-center items-center fixed inset-0 bg-gray-900 bg-opacity-70 z-20">
-          <div className="bg-teal-200 px-14 py-10 shadow-lg rounded-xl space-y-6 w-auto ">
+          <div className="bg-teal-200 px-14 py-10 shadow-2xl rounded-xl space-y-6 w-auto ">
             <div>
               <h1 className="text-center text-xl font-semibold">
                 Upload Your

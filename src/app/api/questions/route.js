@@ -47,6 +47,7 @@ export async function POST(request) {
     const formData = await request.formData();
     const file = formData.get("file");
     const questionType = formData.get("questionType");
+    const year = formData.get("year");
     const universityId = formData.get("universityId");
     const departmentId = formData.get("departmentId");
     const courseId = formData.get("courseId");
@@ -79,7 +80,7 @@ export async function POST(request) {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
           folder: "next-cloudinary-uploads",
-          public_id: uniqueFileName, // Set the file name with a timestamp for uniqueness
+          public_id: uniqueFileName,
           resource_type: "auto",
         },
         (error, result) => {
@@ -95,6 +96,7 @@ export async function POST(request) {
     const newQuestion = new Question({
       name: originalFileName,
       questionType,
+      year,
       universityId,
       departmentId,
       courseId,

@@ -30,6 +30,9 @@ function Questions() {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const searchParams = useSearchParams();
+  // const universityId = searchParams.get("university");
+  // const departmentId = searchParams.get("department");
+  // const courseId = searchParams.get("course");
 
   // Refetch courses when universityId or departmentId is available
   useEffect(() => {
@@ -84,14 +87,6 @@ function Questions() {
     setModalOpen(false);
     setPreviewFile(null);
   };
-
-  // Filter questions based on selected Year and Question Type
-  const filteredQuestions = questions.filter((question) => {
-    return (
-      (year === "" || question.year === year || new Date(question.createdAt).getFullYear().toString() === year) &&
-      (questionType === "" || question.questionType === questionType)
-    );
-  });
 
   console.log("Question with IDs: ", universityId, departmentId, courseId);
   return (
@@ -156,7 +151,7 @@ function Questions() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredQuestions.map((question) => (
+                  {questions.map((question) => (
                     <tr
                       key={question._id}
                       className="hover:bg-gray-300 cursor-pointer"
