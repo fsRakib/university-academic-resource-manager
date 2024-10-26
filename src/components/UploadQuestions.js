@@ -17,10 +17,7 @@ export default function FileUploadQuestions() {
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // if (!session) {
-  //   return <p>Not logged in</p>;
-  // }
-
+ 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
@@ -45,7 +42,7 @@ export default function FileUploadQuestions() {
     formData.append("ownerId", session.user.id);
 
     try {
-      const res = await fetch("/api/questions", {
+      const res = await fetch("/api/question", {
         method: "POST",
         body: formData,
       });

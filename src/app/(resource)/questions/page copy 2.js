@@ -23,7 +23,7 @@ function Questions() {
     setCourses,
   } = useResourceContext();
 
-  // console.log("courses", courses);
+  console.log("courses", courses);
 
   const [questions, setQuestions] = useState([]);
   const [previewFile, setPreviewFile] = useState(null);
@@ -85,7 +85,7 @@ function Questions() {
     setPreviewFile(null);
   };
 
-  // Filter questions based on selected Year and Question Type
+  
   const filteredQuestions = questions.filter((question) => {
     return (
       (year === "" || question.year === year || new Date(question.createdAt).getFullYear().toString() === year) &&

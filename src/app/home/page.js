@@ -77,7 +77,7 @@ function Home() {
     e.preventDefault();
     if (universityId && departmentId && courseId) {
       router.push(
-        `/questions?university=${universityId}&department=${departmentId}&course=${courseId}`
+        `/books?university=${universityId}&department=${departmentId}&course=${courseId}`
       );
     }
   };

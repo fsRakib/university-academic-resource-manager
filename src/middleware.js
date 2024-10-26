@@ -10,7 +10,7 @@ export async function middleware(request) {
   // Use getToken to retrieve the JWT token from the cookies
   const token = await getToken({ req: request, secret: process.env.AUTH_SECRET });
 
-  console.log("your token is:", token);
+  // console.log("your token is:", token);
   
 
   if (isPublicPath && token) {

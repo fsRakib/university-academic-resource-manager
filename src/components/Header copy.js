@@ -5,23 +5,8 @@ import { useRouter } from "next/navigation";
 import FileUploadQuestions from "@/components/UploadQuestions";
 import FileUploadBooks from "@/components/UploadBooks";
 import FileUploadNotes from "@/components/UploadNotes";
-import { useResourceContext } from "@/context/ResourceContext";
 
 function Header() {
-  const {
-    universityId,
-    departmentId,
-    courseId,
-    // setUniversityId,
-    // setDepartmentId,
-    // setCourseId,
-    // universities,
-    // setUniversities,
-    // departments,
-    // setDepartments,
-    // courses,
-    // setCourses,
-  } = useResourceContext();
   const router = useRouter();
   const [selectedOption, setSelectedOption] = useState("Questions");
   const options = ["Questions", "Books", "Notes"];
@@ -43,20 +28,11 @@ function Header() {
   const handleSelectOption = (option) => {
     setSelectedOption(option);
     if (option === "Questions") {
-      // router.push("/questions");
-      router.push(
-        `/questions?university=${universityId}&department=${departmentId}&course=${courseId}`
-      );
+      router.push("/questions");
     } else if (option === "Books") {
-      // router.push("/books");
-      router.push(
-        `/books?university=${universityId}&department=${departmentId}&course=${courseId}`
-      );
+      router.push("/books");
     } else {
-      // router.push("/notes");
-      router.push(
-        `/notes?university=${universityId}&department=${departmentId}&course=${courseId}`
-      );
+      router.push("/notes");
     }
   };
 

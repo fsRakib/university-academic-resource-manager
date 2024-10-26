@@ -1,15 +1,15 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect";
-import { Question } from "@/model/question-model";
+import { Book } from "@/model/book-model";
 import cloudinary from "@/lib/cloudinary";
 
 export async function GET(request) {
   await dbConnect();
 
   const searchParams = request.nextUrl.searchParams;
-  const universityId = searchParams.get("university");
-  const departmentId = searchParams.get("department");
-  const courseId = searchParams.get("course");
+  const universityId = searchParams.get("universityId");
+  const departmentId = searchParams.get("departmentId");
+  const courseId = searchParams.get("courseId");
 
   if (!universityId || !departmentId || !courseId) {
     return NextResponse.json(
@@ -19,22 +19,19 @@ export async function GET(request) {
   }
 
   try {
-    const questions = await Question.find({
+    const books = await Book.find({
       universityId,
       departmentId,
       courseId,
     }).populate("ownerId", "name email");
 
-    if (questions.length === 0) {
-      return NextResponse.json(
-        { message: "No questions found" },
-        { status: 404 }
-      );
+    if (books.length === 0) {
+      return NextResponse.json({ message: "No books found" }, { status: 404 });
     }
 
-    return NextResponse.json(questions, { status: 200 });
+    return NextResponse.json(books, { status: 200 });
   } catch (error) {
-    console.error("Error retrieving questions:", error);
+    console.error("Error retrieving books:", error);
     return NextResponse.json(
       { message: "Server error", error: error.message },
       { status: 500 }
@@ -46,8 +43,9 @@ export async function POST(request) {
   try {
     const formData = await request.formData();
     const file = formData.get("file");
-    const questionType = formData.get("questionType");
-    const year = formData.get("year");
+    //   const name = formData.get("name");
+    //   const author = formData.get("author");
+    const edition = formData.get("edition");
     const universityId = formData.get("universityId");
     const departmentId = formData.get("departmentId");
     const courseId = formData.get("courseId");
@@ -62,12 +60,9 @@ export async function POST(request) {
 
     originalFileName = originalFileName
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-");
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, ""); // Remove leading/trailing hyphens
 
-    // Remove any leading or trailing hyphens that may have been added
-    originalFileName = originalFileName.replace(/^-+|-+$/g, "");
-
-    // Generate a random string based on the current timestamp
     const timestamp = new Date().toISOString().replace(/[-:.]/g, "");
     const uniqueFileName = `${originalFileName}-${timestamp}`;
 
@@ -75,7 +70,7 @@ export async function POST(request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Upload file to Cloudinary using the sanitized name
+    // Upload file to Cloudinary
     const result = await new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
@@ -93,33 +88,29 @@ export async function POST(request) {
 
     await dbConnect();
 
-    const newQuestion = new Question({
+    const newBook = new Book({
       name: originalFileName,
-      questionType,
-      year,
+      edition,
       universityId,
       departmentId,
       courseId,
       ownerId,
       fileUrl: result.secure_url,
       publicId: result.public_id,
-      resourceType: result.resource_type,
       createdAt: new Date(),
     });
 
-    await newQuestion.save();
+    await newBook.save();
 
     return NextResponse.json(
       {
         publicId: result.public_id,
         resourceUrl: result.secure_url,
       },
-      {
-        status: 200,
-      }
+      { status: 200 }
     );
   } catch (error) {
-    console.log("Upload image failed", error);
-    return NextResponse.json({ error: "Upload image failed" }, { status: 500 });
+    console.log("Upload file failed", error);
+    return NextResponse.json({ error: "Upload file failed" }, { status: 500 });
   }
 }
