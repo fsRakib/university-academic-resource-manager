@@ -1,76 +1,10 @@
-// import NextAuth from "next-auth";
-// import GoogleProvider from "next-auth/providers/google";
-// import CredentialsProvider from "next-auth/providers/credentials";
-// import { User } from "@/model/user-model";
-// import bcrypt from "bcryptjs";
-// import dbConnect from "@/lib/dbConnect";
-
-// export const authOptions = {
-//   session: {
-//     strategy: "jwt",
-//   },
-//   providers: [
-//     CredentialsProvider({
-//       credentials: {
-//         email: {},
-//         password: {},
-//       },
-//       async authorize(credentials) {
-//         if (!credentials) return null;
-
-//         try {
-//           await dbConnect();
-//           const user = await User.findOne({
-//             email: credentials?.email,
-//           });
-//           console.log("logged in user: ", user);
-//           if (user) {
-//             const isMatch = await bcrypt.compare(
-//               credentials.password,
-//               user.password
-//             );
-
-//             if (isMatch) {
-//               return user;
-//             } else {
-//               throw new Error("Email or Password is not correct");
-//             }
-//           } else {
-//             throw new Error("User not found");
-//           }
-//         } catch (error) {
-//           throw new Error(error.message);
-//         }
-//       },
-//     }),
-//     GoogleProvider({
-//       clientId: process.env.GOOGLE_CLIENT_ID,
-//       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-//       authorization: {
-//         params: {
-//           prompt: "consent",
-//           access_type: "offline",
-//           response_type: "code",
-//         },
-//       },
-//     }),
-//   ],
-// };
-
-// export const {
-//   handlers: { GET, POST },
-//   auth,
-//   signIn,
-//   signOut,
-// } = NextAuth(authOptions);
-
-
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { User } from "@/model/user-model";
 import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/dbConnect";
+import { NextResponse } from "next/server";
 
 export const authOptions = {
   session: {
@@ -90,8 +24,12 @@ export const authOptions = {
           const user = await User.findOne({
             email: credentials?.email,
           });
-
-          if (user) {
+          console.log("User found:", user);
+          console.log("User verified:", user.isVerified);
+          
+          
+        
+          if (user && user.isVerified) {
             const isMatch = await bcrypt.compare(
               credentials.password,
               user.password
@@ -114,7 +52,7 @@ export const authOptions = {
               throw new Error("Email or Password is not correct");
             }
           } else {
-            throw new Error("User not found");
+            throw new Error("User not found or not verified");
           }
         } catch (error) {
           throw new Error(error.message);

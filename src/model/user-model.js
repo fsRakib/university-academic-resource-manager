@@ -38,6 +38,16 @@ const userSchema = new Schema(
       type: String,
       default: "",
     },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    verifyToken: String,
+    verifyTokenExpiry: Date,
+    forgotToken: String,
+    forgotTokenExpiry: Date,
+    otp: String,
+    otpExpiry: Date,
   },
   { timestamps: true }
 );

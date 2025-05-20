@@ -5,7 +5,7 @@ export async function middleware(request) {
   const path = request.nextUrl.pathname;
 
   const isPublicPath =
-    path === "/login" || path === "/register" || path === "/";
+    path === "/login" || path === "/register" || path === "/" || path==='/verifyemail';
 
   // Use getToken to retrieve the JWT token from the cookies
   const token = await getToken({ req: request, secret: process.env.AUTH_SECRET });
@@ -36,6 +36,7 @@ export const config = {
     "/questions",
     "/books",
     "/notes",
-    "/admin"
+    "/admin",
+    "/verifyemail"
   ],
 };
