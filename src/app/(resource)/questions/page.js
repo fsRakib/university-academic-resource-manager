@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import SearchDropdown from "@/components/SearchDropdown copy";
 import SearchDropdown2 from "@/components/SearchDropdown";
@@ -9,7 +9,7 @@ import FilePreview from "@/components/FilePreviewModal";
 import { useResourceContext } from "@/context/ResourceContext";
 import ProfileDropdown from "@/components/ProfileDropdown";
 
-function Questions() {
+function QuestionsContent() {
   const { questionTypes, years } = useDataContext();
   const [questionType, setQuestionType] = useState("");
   const [year, setYear] = useState("");
@@ -88,7 +88,9 @@ function Questions() {
   // Filter questions based on selected Year and Question Type
   const filteredQuestions = questions.filter((question) => {
     return (
-      (year === "" || question.year === year || new Date(question.createdAt).getFullYear().toString() === year) &&
+      (year === "" ||
+        question.year === year ||
+        new Date(question.createdAt).getFullYear().toString() === year) &&
       (questionType === "" || question.questionType === questionType)
     );
   });
@@ -208,4 +210,10 @@ function Questions() {
   );
 }
 
-export default Questions;
+export default function Questions() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <QuestionsContent />
+    </Suspense>
+  );
+}

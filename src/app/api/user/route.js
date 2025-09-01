@@ -1,42 +1,36 @@
-import NextAuth from "next-auth";
-import authOptions from "@/lib/auth"; // Adjust the path if necessary
+import { auth } from "@/lib/auth";
+import dbConnect from "@/lib/dbConnect";
+import { User } from "@/model/user-model";
 
 export async function GET(req) {
-  const res = await NextAuth(req, authOptions);
+  try {
+    const session = await auth();
 
-  // Handle the response from NextAuth
-  const session = res?.session;
-  console.log("Session:", session);
-
-  if (session) {
-    try {
-      await dbConnect();
-      const user = await User.findOne({ email: session.user.email });
-      console.log("User found:", user);
-
-      if (user) {
-        return new Response(JSON.stringify(user), {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-      } else {
-        console.error("User not found");
-        return new Response("User not found", {
-          status: 404,
-        });
-      }
-    } catch (error) {
-      console.error("Error:", error.message);
-      return new Response("Internal Server Error", {
-        status: 500,
+    if (!session?.user?.email) {
+      return new Response("Unauthorized", {
+        status: 401,
       });
     }
-  } else {
-    console.error("Unauthorized: No session found");
-    return new Response("Unauthorized", {
-      status: 401,
+
+    await dbConnect();
+    const user = await User.findOne({ email: session.user.email });
+
+    if (user) {
+      return new Response(JSON.stringify(user), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } else {
+      return new Response("User not found", {
+        status: 404,
+      });
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    return new Response("Internal Server Error", {
+      status: 500,
     });
   }
 }

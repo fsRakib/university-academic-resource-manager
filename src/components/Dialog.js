@@ -2,16 +2,17 @@
 import React, { useRef } from "react";
 import { X } from "lucide-react";
 
-export default function Dialog({ 
-  title, 
-  onClose, 
-  onOk, 
-  children, 
-  isOpen, 
-  footerButtons 
+export default function Dialog({
+  title,
+  onClose,
+  onOk,
+  children,
+  isOpen,
+  footerButtons,
 }) {
-  if (!isOpen) return null;
   const modalRef = useRef();
+
+  if (!isOpen) return null;
 
   const closeModal = (e) => {
     if (modalRef.current === e.target) {

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import SearchBox from "../../../components/SearchBox";
 import SearchDropdown from "../../../components/SearchDropdown copy";
@@ -8,7 +8,7 @@ import { useResourceContext } from "@/context/ResourceContext";
 import FilePreview from "@/components/FilePreviewModal";
 import ProfileDropdown from "@/components/ProfileDropdown";
 
-function Books() {
+function BooksContent() {
   const { editions } = useDataContext();
   const [edition, setEdition] = useState("");
   const {
@@ -164,4 +164,10 @@ function Books() {
   );
 }
 
-export default Books;
+export default function Books() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BooksContent />
+    </Suspense>
+  );
+}
