@@ -13,7 +13,7 @@ export async function middleware(request) {
   // console.log("your token is:", token);
   
 
-  if (isPublicPath && token) {
+  if (isPublicPath ) {
     return NextResponse.redirect(new URL("/home", request.nextUrl));
   }
 
