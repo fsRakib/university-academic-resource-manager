@@ -20,17 +20,27 @@ function Login() {
     try {
       const formData = new FormData(event.currentTarget);
 
-      const response = await doCredentialLogin(formData);
+      const result = await doCredentialLogin(formData);
+      console.log("Login result:", result);
 
-      if (!!response.error) {
-        console.error(response.error);
-        setError(response.error.message);
+      // For NextAuth v5, check if the result indicates success
+      if (result?.error) {
+        console.error("Login error:", result.error);
+        setError(result.error);
+      } else if (result?.ok || result?.url) {
+        // Success - redirect to home
+        console.log("Login successful, redirecting...");
+        window.location.href = "/home";
       } else {
-        router.push("/home");
-        console.log("Login successful");
+        // If no error but also no success indicators, still try to redirect
+        // This handles cases where the login might be successful but the response structure is different
+        console.log("Login completed, attempting redirect...");
+        setTimeout(() => {
+          window.location.href = "/home";
+        }, 100);
       }
     } catch (e) {
-      console.error(e);
+      console.error("Login error:", e);
       setError("Check your Credentials");
     }
   }

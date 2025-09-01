@@ -8,12 +8,14 @@ export async function middleware(request) {
     path === "/login" || path === "/register" || path === "/";
 
   // Use getToken to retrieve the JWT token from the cookies
-  const token = await getToken({ req: request, secret: process.env.AUTH_SECRET });
+  const token = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
 
   // console.log("your token is:", token);
-  
 
-  if (isPublicPath ) {
+  if (isPublicPath && token) {
     return NextResponse.redirect(new URL("/home", request.nextUrl));
   }
 
@@ -36,6 +38,6 @@ export const config = {
     "/questions",
     "/books",
     "/notes",
-    "/admin"
+    "/admin",
   ],
 };
