@@ -27,6 +27,7 @@ function Login() {
         setError(response.error.message);
       } else {
         router.push("/home");
+        console.log("Login successful");
       }
     } catch (e) {
       console.error(e);
