@@ -17,6 +17,8 @@ function Login() {
 
   async function onSubmit2(event) {
     event.preventDefault();
+    setError(""); // Clear any previous errors
+    
     try {
       const formData = new FormData(event.currentTarget);
 
@@ -27,15 +29,21 @@ function Login() {
       if (result?.error) {
         console.error("Login error:", result.error);
         setError(result.error);
-      } else {
-        // If no error, the redirect should happen automatically
-        // But as a fallback, we can still redirect manually
-        console.log("Login successful, redirecting...");
-        router.push("/home");
+      } else if (result?.success) {
+        // Login was successful
+        console.log("Login successful!");
+        if (result?.redirecting) {
+          // Server-side redirect is happening, no need to do anything
+          console.log("Server-side redirect in progress...");
+        } else {
+          // Fallback client-side redirect
+          console.log("Performing client-side redirect...");
+          router.push("/home");
+        }
       }
     } catch (e) {
-      console.error("Login error:", e);
-      setError("Check your Credentials");
+      console.error("Unexpected login error:", e);
+      setError("An unexpected error occurred. Please try again.");
     }
   }
 

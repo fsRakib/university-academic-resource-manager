@@ -17,17 +17,27 @@ export async function doLogout() {
 export async function doCredentialLogin(formData) {
   console.log("formData", formData);
   try {
-    const result = await signIn("credentials", {
+    await signIn("credentials", {
       email: formData.get("email"),
       password: formData.get("password"),
       redirectTo: "/home",
     });
-
-    console.log("Sign in result:", result);
-    return result;
+    // If we reach this point without error, redirect was successful
+    return { success: true };
   } catch (err) {
     console.error("Sign in error:", err);
-    // Return error information that can be handled by the client
+    
+    // NEXT_REDIRECT is not an error - it means redirect is happening
+    if (err.message && err.message.includes("NEXT_REDIRECT")) {
+      return { success: true, redirecting: true };
+    }
+    
+    // Handle actual authentication errors
+    if (err.type === "CredentialsSignin") {
+      return { error: "Invalid email or password" };
+    }
+    
+    // Return other errors
     return { error: err.message || "Login failed" };
   }
 }
