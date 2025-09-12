@@ -71,6 +71,14 @@ export const authOptions = {
     }),
   ],
   callbacks: {
+    async redirect({ url, baseUrl }) {
+      // If the url is a relative path, prepend the baseUrl
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // If the url is on the same origin as the base URL, return it
+      if (new URL(url).origin === baseUrl) return url;
+      // Otherwise, return the base URL with /home
+      return `${baseUrl}/home`;
+    },
     async signIn({ user, account, profile }) {
       if (account.provider === "google") {
         try {

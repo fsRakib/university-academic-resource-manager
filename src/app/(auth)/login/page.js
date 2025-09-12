@@ -23,21 +23,15 @@ function Login() {
       const result = await doCredentialLogin(formData);
       console.log("Login result:", result);
 
-      // For NextAuth v5, check if the result indicates success
+      // Check if there's an error
       if (result?.error) {
         console.error("Login error:", result.error);
         setError(result.error);
-      } else if (result?.ok || result?.url) {
-        // Success - redirect to home
-        console.log("Login successful, redirecting...");
-        window.location.href = "/home";
       } else {
-        // If no error but also no success indicators, still try to redirect
-        // This handles cases where the login might be successful but the response structure is different
-        console.log("Login completed, attempting redirect...");
-        setTimeout(() => {
-          window.location.href = "/home";
-        }, 100);
+        // If no error, the redirect should happen automatically
+        // But as a fallback, we can still redirect manually
+        console.log("Login successful, redirecting...");
+        router.push("/home");
       }
     } catch (e) {
       console.error("Login error:", e);
@@ -71,6 +65,11 @@ function Login() {
         <hr className="w-full border-gray-600" />
       </div>
       <form onSubmit={onSubmit2}>
+        {error && (
+          <div className="w-full p-3 mb-4 text-sm text-red-700 bg-red-100 border border-red-300 rounded-lg">
+            {error}
+          </div>
+        )}
         <div className="relative w-full h-12 my-8">
           <input
             type="email"

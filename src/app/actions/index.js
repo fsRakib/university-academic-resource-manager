@@ -20,13 +20,14 @@ export async function doCredentialLogin(formData) {
     const result = await signIn("credentials", {
       email: formData.get("email"),
       password: formData.get("password"),
-      redirect: false,
+      redirectTo: "/home",
     });
 
     console.log("Sign in result:", result);
     return result;
   } catch (err) {
     console.error("Sign in error:", err);
-    throw err;
+    // Return error information that can be handled by the client
+    return { error: err.message || "Login failed" };
   }
 }
