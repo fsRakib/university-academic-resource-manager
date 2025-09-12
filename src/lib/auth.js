@@ -71,18 +71,61 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async signIn({ user, account, profile }) {
+      if (account.provider === "google") {
+        try {
+          await dbConnect();
+          
+          // Check if user already exists
+          const existingUser = await User.findOne({ email: user.email });
+          
+          if (!existingUser) {
+            // Create new user for Google OAuth
+            const newUser = new User({
+              name: user.name,
+              email: user.email,
+              phone: "", // Google doesn't provide phone
+              address: "",
+              university: "",
+              department: "",
+              session: "",
+              gender: "",
+              provider: "google",
+            });
+            
+            await newUser.save();
+            user.id = newUser._id.toString();
+          } else {
+            user.id = existingUser._id.toString();
+            // Update user data from existing database record
+            user.phone = existingUser.phone;
+            user.address = existingUser.address;
+            user.university = existingUser.university;
+            user.department = existingUser.department;
+            user.session = existingUser.session;
+            user.gender = existingUser.gender;
+          }
+          
+          return true;
+        } catch (error) {
+          console.error("Error during Google sign in:", error);
+          return false;
+        }
+      }
+      return true;
+    },
+    async jwt({ token, user, account }) {
       // When user logs in, populate the JWT token with user data
       if (user) {
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
-        token.phone = user.phone;
-        token.address = user.address;
-        token.university = user.university;
-        token.department = user.department;
-        token.session = user.session;
-        token.gender = user.gender;
+        token.phone = user.phone || "";
+        token.address = user.address || "";
+        token.university = user.university || "";
+        token.department = user.department || "";
+        token.session = user.session || "";
+        token.gender = user.gender || "";
       }
       return token;
     },

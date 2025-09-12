@@ -7,7 +7,9 @@ const userSchema = new Schema(
       type: String,
     },
     password: {
-      required: true,
+      required: function() {
+        return !this.provider || this.provider === 'credentials';
+      },
       type: String,
     },
     email: {
@@ -37,6 +39,10 @@ const userSchema = new Schema(
     gender: {
       type: String,
       default: "",
+    },
+    provider: {
+      type: String,
+      default: "credentials",
     },
   },
   { timestamps: true }
